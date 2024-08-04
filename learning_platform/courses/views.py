@@ -3,6 +3,16 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Course, Lesson
 from .forms import CourseForm, LessonForm
+from django.shortcuts import render
+from .models import Course, Category
+
+def home(request):
+    featured_courses = Course.objects.filter(featured=True)[:6]
+    categories = Category.objects.all()[:6]
+    return render(request, 'home.html', {
+        'featured_courses': featured_courses,
+        'categories': categories,
+    })
 
 @login_required
 def favorite_courses(request):
@@ -86,3 +96,8 @@ def create_lesson(request, course_id):
     else:
         form = LessonForm()
     return render(request, 'courses/lesson_form.html', {'form': form, 'course': course})
+
+def category_courses(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    courses = Course.objects.filter(category=category)
+    return render(request, 'courses/category_courses.html', {'category': category, 'courses': courses})

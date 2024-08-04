@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ category.name }} Courses</h2>
+<div class="row">
+    {% for course in courses %}
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ course.title }}</h5>
+                <p class="card-text">{{ course.description|truncatewords:20 }}</p>
+                <a href="{% url 'course_detail' course.id %}" class="btn btn-primary">Learn More</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>No courses available in this category.</p>
+    {% endfor %}
+</div>
+{% endblock %}
