@@ -7,5 +7,6 @@ urlpatterns = [
     path('create/', views.create_course, name='create_course'),
     path('<int:course_id>/edit/', views.edit_course, name='edit_course'),
     path('<int:course_id>/add_lesson/', views.create_lesson, name='create_lesson'),
-
+    path('<int:course_id>/toggle_favorite/', views.toggle_favorite, name='toggle_favorite'),
+    path('favorites/', views.favorite_courses, name='favorite_courses'),
 ]

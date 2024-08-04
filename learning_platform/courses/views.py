@@ -5,6 +5,20 @@ from .models import Course, Lesson
 from .forms import CourseForm, LessonForm
 
 @login_required
+def favorite_courses(request):
+    favorite_courses = request.user.favorite_courses.all()
+    return render(request, 'courses/favorite_courses.html', {'favorite_courses': favorite_courses})
+
+@login_required
+def toggle_favorite(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+    if course.favorites.filter(id=request.user.id).exists():
+        course.favorites.remove(request.user)
+    else:
+        course.favorites.add(request.user)
+    return redirect('course_detail', course_id=course_id)
+
+@login_required
 def course_list(request):
     courses = Course.objects.all()
     return render(request, 'courses/course_list.html', {'courses': courses})

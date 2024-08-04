@@ -7,6 +7,7 @@ class Course(models.Model):
     tutor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='courses')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    favorites = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='favorite_courses', blank=True)
 
     def __str__(self):
         return self.title
