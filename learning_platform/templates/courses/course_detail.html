@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>{{ course.title }}</h2>
+  <p>{{ course.description }}</p>
+  <p>Tutor: {{ course.tutor.username }}</p>
+  
+  <h3>Lessons</h3>
+  <ul>
+    {% for lesson in lessons %}
+      <li>{{ lesson.title }}</li>
+    {% empty %}
+      <li>No lessons available.</li>
+    {% endfor %}
+  </ul>
+  
+  {% if user.is_tutor and course.tutor == user or user.is_admin_user %}
+    <a href="{% url 'create_lesson' course.id %}">Add Lesson</a>
+    <a href="{% url 'edit_course' course.id %}">Edit Course</a>
+  {% endif %}
+  
+  <a href="{% url 'course_list' %}">Back to Course List</a>
+{% endblock %}
