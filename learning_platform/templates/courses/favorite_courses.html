@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>My Favorite Courses</h2>
+  <ul>
+    {% for course in favorite_courses %}
+      <li><a href="{% url 'course_detail' course.id %}">{{ course.title }}</a></li>
+    {% empty %}
+      <li>You haven't favorited any courses yet.</li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'course_list' %}">Back to All Courses</a>
+{% endblock %}

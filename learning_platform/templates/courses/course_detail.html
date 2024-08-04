@@ -1,23 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>{{ course.title }}</h2>
-  <p>{{ course.description }}</p>
-  <p>Tutor: {{ course.tutor.username }}</p>
-  
-  <h3>Lessons</h3>
-  <ul>
-    {% for lesson in lessons %}
-      <li>{{ lesson.title }}</li>
-    {% empty %}
-      <li>No lessons available.</li>
-    {% endfor %}
-  </ul>
-  
-  {% if user.is_tutor and course.tutor == user or user.is_admin_user %}
-    <a href="{% url 'create_lesson' course.id %}">Add Lesson</a>
-    <a href="{% url 'edit_course' course.id %}">Edit Course</a>
-  {% endif %}
-  
-  <a href="{% url 'course_list' %}">Back to Course List</a>
+    <h2 class="mb-4">{{ course.title }}</h2>
+    <p>{{ course.description }}</p>
+    <p><strong>Tutor:</strong> {{ course.tutor.username }}</p>
+
+    {% if user.is_authenticated %}
+        <form action="{% url 'toggle_favorite' course.id %}" method="post" class="mb-3">
+            {% csrf_token %}
+            {% if user in course.favorites.all %}
+                <button type="submit" class="btn btn-warning">Remove from Favorites</button>
+            {% else %}
+                <button type="submit" class="btn btn-success">Add to Favorites</button>
+            {% endif %}
+        </form>
+    {% endif %}
+
+    <h3 class="mt-4">Lessons</h3>
+    <ul class="list-group">
+        {% for lesson in lessons %}
+            <li class="list-group-item">{{ lesson.title }}</li>
+        {% empty %}
+            <li class="list-group-item">No lessons available.</li>
+        {% endfor %}
+    </ul>
+
+    {% if user.is_tutor and course.tutor == user or user.is_admin_user %}
+        <div class="mt-3">
+            <a href="{% url 'create_lesson' course.id %}" class="btn btn-primary">Add Lesson</a>
+            <a href="{% url 'edit_course' course.id %}" class="btn btn-secondary">Edit Course</a>
+        </div>
+    {% endif %}
+
+    <a href="{% url 'course_list' %}" class="btn btn-link mt-3">Back to Course List</a>
 {% endblock %}
