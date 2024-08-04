@@ -1,12 +1,24 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Course, Lesson
+from django.contrib.auth import authenticate, login
+from .models import Course, Lesson, Category
 from .forms import CourseForm, LessonForm
-from django.shortcuts import render
-from .models import Course, Category
+
 
 def home(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            messages.success(request, f"Welcome back, {username}!")
+            return redirect('course_list')
+        else:
+            messages.error(request, "Invalid username or password.")
+
     featured_courses = Course.objects.filter(featured=True)[:6]
     categories = Category.objects.all()[:6]
     return render(request, 'home.html', {
