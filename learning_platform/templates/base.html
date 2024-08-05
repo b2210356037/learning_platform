@@ -8,6 +8,7 @@
     <style>
         body {
             padding-top: 5rem;
+            margin-bottom: 4rem; /* Adjust the bottom margin for footer */
         }
         .starter-template {
             padding: 3rem 1.5rem;
@@ -30,6 +31,24 @@
             color: #fff; /* Text color on hover */
             border-color: #0056b3; /* Darker border color on hover */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+        }
+        footer {
+            background-color: #343a40; /* Dark background for footer */
+            color: #ffffff; /* White text color */
+            padding: 1rem; /* Padding for the footer */
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+        footer a {
+            color: #ffffff; /* White text color for links */
+            text-decoration: none; /* Remove underline */
+            transition: color 0.3s; /* Smooth color transition */
+        }
+        footer a:hover {
+            color: #007bff; /* Change color on hover */
+            text-decoration: underline; /* Add underline on hover */
         }
     </style>
 </head>
@@ -82,6 +101,13 @@
             {% endblock %}
         </div>
     </main>
+
+    <footer>
+        <p>&copy; 2024 Learning Platform. Developed by 
+            <a href="https://tr.linkedin.com/in/iclal-g%C3%BCl-se" target="_blank" rel="noopener noreferrer"><strong>İclal Gül</strong></a> and 
+            <a href="https://tr.linkedin.com/in/toprak-gungor" target="_blank" rel="noopener noreferrer"><strong>Toprak Güngör</strong></a>.
+        </p>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
