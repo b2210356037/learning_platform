@@ -2,6 +2,15 @@
 
 {% block content %}
     <h2 class="mb-4">Courses</h2>
+
+    <!-- Search Form -->
+    <form method="get" action="{% url 'course_list' %}" class="mb-4">
+        <div class="input-group">
+            <input type="text" class="form-control" name="search" placeholder="Search for courses" value="{{ request.GET.search }}">
+            <button class="btn btn-primary btn-lg ms-2" type="submit">Search</button>
+        </div>
+    </form>
+
     {% if courses is not None %}
         {% if courses %}
             <div class="row">
