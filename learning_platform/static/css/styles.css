@@ -1,0 +1,48 @@
+.bg-purple {
+    background-color: #4A0E4E;
+}
+
+.text-purple {
+    color: #4A0E4E;
+}
+
+.btn-purple {
+    background-color: #BA68C8;
+    color: #ffffff;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 10px 20px;
+    border: 1px solid #D1C4E9;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+
+.btn-purple:hover {
+    background-color: #9C27B0;
+    color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+
+
+.btn-outline-purple {
+    border-color: #BA68C8;
+    color: #BA68C8;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-purple:hover {
+    background-color: #BA68C8;
+    color: #ffffff;
+}
+
+.border-purple {
+    border-color: #B39DDB !important;
+    border-width: 2px !important;
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
