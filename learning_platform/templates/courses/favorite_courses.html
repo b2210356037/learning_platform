@@ -1,13 +1,31 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>My Favorite Courses</h2>
-  <ul>
-    {% for course in favorite_courses %}
-      <li><a href="{% url 'course_detail' course.id %}">{{ course.title }}</a></li>
-    {% empty %}
-      <li>You haven't favorited any courses yet.</li>
-    {% endfor %}
-  </ul>
-  <a href="{% url 'course_list' %}">Back to All Courses</a>
+    <div class="container my-5">
+        <h2 class="mb-4 text-center text-primary">My Favorite Courses</h2>
+
+        {% if favorite_courses %}
+            <div class="row">
+                {% for course in favorite_courses %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card custom-card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title text-primary">{{ course.title }}</h5>
+                                <p class="card-text">Click below to view details about this course.</p>
+                                <a href="{% url 'course_detail' course.id %}" class="btn btn-outline-primary">View Course</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center">
+                <p>You haven't favorited any courses yet.</p>
+            </div>
+        {% endif %}
+
+        <div class="text-center mt-4">
+            <a href="{% url 'course_list' %}" class="btn btn-primary">Back to All Courses</a>
+        </div>
+    </div>
 {% endblock %}
