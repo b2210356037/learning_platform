@@ -2,23 +2,32 @@
 
 {% block content %}
     <h2 class="mb-4">Courses</h2>
-    <div class="row">
-        {% for course in courses %}
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ course.title }}</h5>
-                        <p class="card-text">{{ course.description|truncatewords:20 }}</p>
-                        <a href="{% url 'course_detail' course.id %}" class="btn btn-primary">View Course</a>
+    {% if courses is not None %}
+        {% if courses %}
+            <div class="row">
+                {% for course in courses %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ course.title }}</h5>
+                                <p class="card-text">{{ course.description|truncatewords:20 }}</p>
+                                <a href="{% url 'course_detail' course.id %}" class="btn btn-primary">View Course</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                {% endfor %}
             </div>
-        {% empty %}
-            <div class="col-12">
-                <p>No courses available.</p>
+        {% else %}
+            <div class="alert alert-info">
+                <p>No courses available at the moment.</p>
             </div>
-        {% endfor %}
-    </div>
+        {% endif %}
+    {% else %}
+        <div class="alert alert-warning">
+            <p>Unable to load courses. Please try again later.</p>
+        </div>
+    {% endif %}
+
     {% if user.is_tutor or user.is_admin_user %}
         <a href="{% url 'create_course' %}" class="btn btn-success mt-3">Create New Course</a>
     {% endif %}
