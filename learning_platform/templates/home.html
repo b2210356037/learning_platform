@@ -1,54 +1,57 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container-fluid bg-dark">
-    <div class="row">
-        <div class="col-md-8 p-5">
-            <div class="jumbotron bg-purple text-white rounded-3 p-5 shadow">
-                <h1 class="display-4 fw-bold">Welcome to Our Learning Platform</h1>
+<div class="container-fluid bg-dark text-light">
+    <div class="row align-items-stretch">
+        <!-- Hero Section -->
+        <div class="col-md-8 d-flex flex-column justify-content-center p-5">
+            <div class="jumbotron rounded-3 p-5 shadow-lg" style="background-color: #343a40;">
+                <h1 class="display-4 fw-bold mb-3">Welcome to Our Learning Platform</h1>
                 <p class="lead">Discover new skills and expand your knowledge with our wide range of courses.</p>
                 <hr class="my-4 bg-light opacity-25">
                 <p>Start learning today and take your career to the next level.</p>
                 <a class="btn btn-light btn-lg mt-3" href="{% url 'course_list' %}" role="button">Explore Courses</a>
             </div>
 
-            <h2 class="mt-5 mb-4 text-purple">Featured Courses</h2>
+            <h2 class="mt-5 mb-4 text-primary">Featured Courses</h2>
             <div class="row">
                 {% for course in featured_courses %}
                 <div class="col-md-6 mb-4">
-                    <div class="card bg-dark text-white border-purple shadow-sm hover-card">
+                    <div class="card bg-dark text-light border-primary shadow-sm hover-card">
                         <div class="card-body">
-                            <h5 class="card-title text-purple">{{ course.title }}</h5>
+                            <h5 class="card-title text-primary">{{ course.title }}</h5>
                             <p class="card-text">{{ course.description|truncatewords:20 }}</p>
-                            <a href="{% url 'course_detail' course.id %}" class="btn btn-outline-purple mt-2">Learn More</a>
+                            <a href="{% url 'course_detail' course.id %}" class="btn btn-outline-primary mt-2">Learn More</a>
                         </div>
                     </div>
                 </div>
                 {% empty %}
                 <div class="col-12">
-                    <p class="text-white">No featured courses available at the moment.</p>
+                    <p class="text-light">No featured courses available at the moment.</p>
                 </div>
                 {% endfor %}
             </div>
         </div>
+
+        <!-- Login Section -->
         <div class="col-md-4 p-5 d-flex align-items-center justify-content-center">
-            <div class="card bg-dark text-white border-purple shadow" style="width: 100%; max-width: 400px;">
+            <div class="card bg-dark text-light border-primary shadow" style="width: 100%; max-width: 400px;">
                 <div class="card-body">
-                    <h5 class="card-title text-purple mb-4">Login</h5>
+                    <h5 class="card-title text-primary mb-4">Login</h5>
                     <form method="post" action="{% url 'login' %}">
                         {% csrf_token %}
                         <div class="form-group mb-3">
                             <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control bg-dark text-white border-purple" id="username" name="username" required>
+                            <input type="text" class="form-control bg-dark text-light border-primary" id="username" name="username" required>
                         </div>
                         <div class="form-group mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control bg-dark text-white border-purple" id="password" name="password" required>
+                            <input type="password" class="form-control bg-dark text-light border-primary" id="password" name="password" required>
                         </div>
-                        <button type="submit" class="btn btn-light w-100 py-2 fw-bold text-purple shadow btn-large-text">Login</button>
+                        <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">Login</button>
                     </form>
                     <div class="mt-3 text-center">
-                        <a href="{% url 'register' %}" class="text-purple text-decoration-none">Don't have an account? Register here</a>
+                        <a href="{% url 'register' %}" class="text-primary text-decoration-none">Don't have an account? Register here</a>
                     </div>
                 </div>
             </div>
