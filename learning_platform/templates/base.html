@@ -19,6 +19,18 @@
         .nav-link {
             margin-right: 1rem; /* Adjust spacing between nav links */
         }
+        .nav-link.login, .nav-link.register {
+            border: 2px solid #007bff; /* Frame color */
+            border-radius: 0.25rem; /* Rounded corners */
+            padding: 0.5rem 1rem; /* Padding around the text */
+            transition: all 0.3s ease; /* Smooth transition for all properties */
+        }
+        .nav-link.login:hover, .nav-link.register:hover {
+            background-color: #007bff; /* Background color on hover */
+            color: #fff; /* Text color on hover */
+            border-color: #0056b3; /* Darker border color on hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+        }
     </style>
 </head>
 <body>
@@ -45,10 +57,10 @@
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        <a class="nav-link login" href="{% url 'login' %}">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                        <a class="nav-link register" href="{% url 'register' %}">Register</a>
                     </li>
                     {% endif %}
                 </ul>
