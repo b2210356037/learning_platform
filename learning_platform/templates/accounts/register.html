@@ -1,35 +1,42 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
+
+
 {% block content %}
 <div class="container py-5">
   <div class="row justify-content-center">
     <div class="col-md-6">
-      <div class="card">
-        <div class="card-header bg-primary text-white text-center">
-          <h2>Register</h2>
+      <div class="card shadow-lg border-0 rounded-lg">
+        <div class="card-header bg-gradient-primary text-white text-center py-4">
+          <h2 class="font-weight-light mb-0">Create Your Account</h2>
         </div>
-        <div class="card-body">
+        <div class="card-body p-4">
           <form method="post">
             {% csrf_token %}
             {% for field in form %}
-              <div class="form-group">
-                {{ field.label_tag }}
+              <div class="form-group mb-3">
+                <label class="form-label small text-muted">{{ field.label }}</label>
                 {{ field }}
                 {% if field.help_text %}
-                  <small class="form-text text-muted">{{ field.help_text }}</small>
+                  <small class="form-text text-muted">{{ field.help_text|safe }}</small>
                 {% endif %}
                 {% for error in field.errors %}
-                  <div class="alert alert-danger">{{ error }}</div>
+                  <div class="alert alert-danger mt-1 p-2 small">{{ error }}</div>
                 {% endfor %}
               </div>
             {% endfor %}
-            <button type="submit" class="btn btn-primary btn-block">Register</button>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+            </div>
           </form>
         </div>
       </div>
       <div class="text-center mt-3">
-        <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+        <p class="text-muted">Already have an account? <a href="{% url 'login' %}" class="text-primary">Sign In</a></p>
       </div>
     </div>
   </div>
