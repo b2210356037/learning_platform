@@ -11,12 +11,7 @@
     color: #ffffff;
     transition: all 0.3s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    padding: 10px 20px;
-    border: 1px solid #D1C4E9;
-    font-weight: bold;
-    font-size: 1.1em;
 }
-
 
 .btn-purple:hover {
     background-color: #9C27B0;
@@ -46,3 +41,12 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.btn-light.text-purple:hover {
+    background-color: #9C27B0;
+    color: #ffffff;
+}
+
+
+.btn-large-text {
+    font-size: 1.2rem;
+}
