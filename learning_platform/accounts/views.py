@@ -22,6 +22,8 @@ def login_view(request):
     else:
         return render(request, 'accounts/login.html')
 
+User = get_user_model()
+
 def register_view(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
