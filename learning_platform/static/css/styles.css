@@ -92,7 +92,7 @@
 }
 
 .flip-card-back {
-    background-color: #4A0E4E;
+    transform: rotateY(180deg);
 }
 
 .flip-card-back .btn-primary {
@@ -106,5 +106,9 @@
 
 .card-text {
     font-size: 0.9rem;
+}
+
+.flip-card-back .content {
+    transform: rotateY(180deg);
 }
 
