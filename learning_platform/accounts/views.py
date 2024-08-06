@@ -1,13 +1,10 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from .forms import CustomUserCreationForm
-from django.contrib.auth import logout
-from django.shortcuts import redirect
 
 def logout_view(request):
     logout(request)
     return redirect('home')
-
 
 def login_view(request):
     if request.method == 'POST':
