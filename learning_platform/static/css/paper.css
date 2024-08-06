@@ -1,0 +1,49 @@
+/* Özel Stil Ayarları */
+
+/* Arka plan ve genel düzen */
+body {
+    min-height: 100vh;
+    background-color: #f6eee3;
+    background-size: 20px 20px;
+    background-image: repeating-linear-gradient(0deg, #e5decf, #e5decf 1px, #f6eee3 1px, #f6eee3);
+    padding: 1rem;
+    color: var(--text-color);
+  }
+  
+  /* Başlıklar */
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* Form kartı ve düğmeler */
+  .card-body {
+    padding: 2rem;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+    border-radius: 0.25rem;
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d;
+    border: none;
+    border-radius: 0.25rem;
+  }
+  
+  /* Stil düzenlemeleri */
+  .paper {
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+  }
+  
+  .shadow-large {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .border {
+    border: 1px solid #dee2e6;
+  }
+  

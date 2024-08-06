@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container my-5">
+<div class="container my-5">
+    <section class="paper border shadow shadow-large">
         <h2 class="text-center mb-4 text-primary">
             {% if course %}Edit Course{% else %}Create New Course{% endif %}
         </h2>
-        
+
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card border-0 shadow-lg rounded-lg">
+                <div class="paper border shadow shadow-large">
                     <div class="card-body">
                         <form method="post">
                             {% csrf_token %}
@@ -25,5 +26,6 @@
         <div class="text-center mt-4">
             <a href="{% url 'course_list' %}" class="btn btn-secondary btn-lg">Back to Course List</a>
         </div>
-    </div>
+    </section>
+</div>
 {% endblock %}
