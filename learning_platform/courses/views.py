@@ -5,7 +5,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from .models import Course, Lesson, Category
 from .forms import CourseForm, LessonForm
-
+from django.db.models import Q
+from fuzzywuzzy import fuzz, process
 
 def home(request):
     if request.method == 'POST':
@@ -42,7 +43,17 @@ def toggle_favorite(request, course_id):
 
 @login_required
 def course_list(request):
+    search_term = request.GET.get('search', '')
     courses = Course.objects.all()
+
+    if search_term:
+        # Fuzzy search
+        course_titles = courses.values_list('title', flat=True)
+        matches = process.extract(search_term, course_titles, limit=10, scorer=fuzz.partial_ratio)
+        matched_titles = [match[0] for match in matches if match[1] >= 40]  # 60% similarity threshold
+        
+        courses = courses.filter(Q(title__in=matched_titles) | Q(description__icontains=search_term))
+
     return render(request, 'courses/course_list.html', {'courses': courses})
 
 @login_required
