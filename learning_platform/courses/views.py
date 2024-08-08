@@ -7,6 +7,8 @@ from .models import Course, Lesson, Category
 from .forms import CourseForm, LessonForm
 from django.db.models import Q
 from fuzzywuzzy import fuzz, process
+from .models import Course, Lesson
+from .forms import LessonForm
 
 def home(request):
     if request.method == 'POST':
@@ -124,3 +126,21 @@ def category_courses(request, category_id):
     category = get_object_or_404(Category, id=category_id)
     courses = Course.objects.filter(category=category)
     return render(request, 'courses/category_courses.html', {'category': category, 'courses': courses})
+
+@login_required
+def edit_lesson(request, course_id ,lesson_id):
+    course = get_object_or_404(Course, id=course_id)
+    lesson = get_object_or_404(Lesson, id=lesson_id)
+    if not request.user.is_admin_user() and (not request.user.is_tutor() or course.tutor != request.user):
+        messages.error(request, "You don't have permission to edit this lesson.")
+        return redirect('course_detail', course_id=course.id)
+    
+    if request.method == 'POST':
+        form = LessonForm(request.POST, request.FILES, instance=lesson)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Lesson updated successfully.")
+            return redirect('course_detail', course_id=course.id)
+    else:
+        form = LessonForm(instance=lesson)
+    return render(request, 'courses/edit_lesson.html', {'form': form, 'course': course, 'lesson': lesson})
