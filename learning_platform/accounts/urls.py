@@ -13,4 +13,5 @@ urlpatterns = [
         form_class=CustomUserCreationForm,
         success_url=reverse_lazy('course_list')  # Add this line
     ), name='register'),
+    path('change_password/', views.change_password, name='change_password'),
 ]
