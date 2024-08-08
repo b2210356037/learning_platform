@@ -50,7 +50,7 @@ def course_list(request):
         # Fuzzy search
         course_titles = courses.values_list('title', flat=True)
         matches = process.extract(search_term, course_titles, limit=10, scorer=fuzz.partial_ratio)
-        matched_titles = [match[0] for match in matches if match[1] >= 40]  # 60% similarity threshold
+        matched_titles = [match[0] for match in matches if match[1] >= 40]  # 40% similarity threshold
         
         courses = courses.filter(Q(title__in=matched_titles) | Q(description__icontains=search_term))
 
@@ -73,7 +73,7 @@ def create_course(request):
         return redirect('course_list')
     
     if request.method == 'POST':
-        form = CourseForm(request.POST)
+        form = CourseForm(request.POST, request.FILES)
         if form.is_valid():
             course = form.save(commit=False)
             course.tutor = request.user
@@ -109,7 +109,7 @@ def create_lesson(request, course_id):
         return redirect('course_detail', course_id=course.id)
     
     if request.method == 'POST':
-        form = LessonForm(request.POST)
+        form = LessonForm(request.POST, request.FILES)
         if form.is_valid():
             lesson = form.save(commit=False)
             lesson.course = course

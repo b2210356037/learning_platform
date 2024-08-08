@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Add Lesson to {{ course.title }}</h2>
-  <form method="post">
+  <h2>{% if lesson %}Edit{% else %}Create{% endif %} Lesson</h2>
+  <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Save Lesson</button>
+    <button type="submit">Save</button>
   </form>
-  <a href="{% url 'course_detail' course.id %}">Cancel</a>
 {% endblock %}

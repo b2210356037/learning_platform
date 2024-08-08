@@ -17,13 +17,27 @@
     {% endif %}
 
     <h3 class="mt-4">Lessons</h3>
-    <ul class="list-group">
-        {% for lesson in lessons %}
-            <li class="list-group-item">{{ lesson.title }}</li>
-        {% empty %}
-            <li class="list-group-item">No lessons available.</li>
-        {% endfor %}
-    </ul>
+<ul class="list-group">
+    {% for lesson in lessons %}
+        <li class="list-group-item">
+            <h4>{{ lesson.title }}</h4>
+            <p>{{ lesson.content }}</p>
+            {% if lesson.video %}
+                <div class="mt-3">
+                    <video width="320" height="240" controls>
+                        <source src="{{ lesson.video.url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            {% else %}
+                <p>No video available for this lesson.</p>
+            {% endif %}
+        </li>
+    {% empty %}
+        <li class="list-group-item">No lessons available.</li>
+    {% endfor %}
+</ul>
+
 
     {% if user.is_tutor and course.tutor == user or user.is_admin_user %}
         <div class="mt-3">
