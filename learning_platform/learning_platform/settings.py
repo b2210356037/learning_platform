@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import os
+import dj_database_url
 from pathlib import Path
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -89,13 +90,15 @@ WSGI_APPLICATION = 'learning_platform.wsgi.application'
 # }
 
 ##postgres database
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'learning-platform-db',
+        'NAME': 'akademi',
         'USER': 'postgres',
-        'PASSWORD': 'ToprakGungor1919',
-        'HOST': 'localhost',
+        'PASSWORD': '12345',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }
