@@ -2,6 +2,18 @@
 {% load static %}
 <html lang="en">
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+{% block extra_head %}
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.6.8/plyr.css" />
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://cdn.plyr.io/3.6.8/plyr.js"></script>
+{% endblock %}
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -77,8 +89,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'favorite_courses' %}">My Favorites</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ user.username }}
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{% url 'change_password' %}">Change Password</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                        </ul>
                     </li>
                     {% else %}
                     <li class="nav-item">
@@ -92,6 +111,8 @@
             </div>
         </div>
     </nav>
+    
+    
 
     <main class="container">
         <div class="starter-template">
@@ -114,6 +135,7 @@
             <a href="https://tr.linkedin.com/in/toprak-gungor" target="_blank" rel="noopener noreferrer"><strong>Toprak Güngör</strong></a>.
         </p>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

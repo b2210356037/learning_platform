@@ -9,6 +9,8 @@ class CustomUser(AbstractUser):
     )
     
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES, default=1)
+    name = models.CharField(max_length=100, blank=False, default='')
+    surname = models.CharField(max_length=100, blank=False, default='')
 
     def is_student(self):
         return self.user_type == 1

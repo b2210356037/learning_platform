@@ -17,6 +17,7 @@ class Course(models.Model):
     featured = models.BooleanField(default=False)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='courses')
     featured = models.BooleanField(default=False)
+    #video = models.FileField(upload_to='course_videos/', null=True, blank=True)
     def __str__(self):
         return self.title
 
@@ -27,6 +28,7 @@ class Lesson(models.Model):
     order = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    video = models.FileField(upload_to='lesson_videos/', null=True, blank=True)
 
     class Meta:
         ordering = ['order']

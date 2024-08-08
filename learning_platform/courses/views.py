@@ -5,7 +5,10 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from .models import Course, Lesson, Category
 from .forms import CourseForm, LessonForm
-
+from django.db.models import Q
+from fuzzywuzzy import fuzz, process
+from .models import Course, Lesson
+from .forms import LessonForm
 
 def home(request):
     if request.method == 'POST':
@@ -42,7 +45,17 @@ def toggle_favorite(request, course_id):
 
 @login_required
 def course_list(request):
+    search_term = request.GET.get('search', '')
     courses = Course.objects.all()
+
+    if search_term:
+        # Fuzzy search
+        course_titles = courses.values_list('title', flat=True)
+        matches = process.extract(search_term, course_titles, limit=10, scorer=fuzz.partial_ratio)
+        matched_titles = [match[0] for match in matches if match[1] >= 40]  # 40% similarity threshold
+        
+        courses = courses.filter(Q(title__in=matched_titles) | Q(description__icontains=search_term))
+
     return render(request, 'courses/course_list.html', {'courses': courses})
 
 @login_required
@@ -62,7 +75,7 @@ def create_course(request):
         return redirect('course_list')
     
     if request.method == 'POST':
-        form = CourseForm(request.POST)
+        form = CourseForm(request.POST, request.FILES)
         if form.is_valid():
             course = form.save(commit=False)
             course.tutor = request.user
@@ -98,7 +111,7 @@ def create_lesson(request, course_id):
         return redirect('course_detail', course_id=course.id)
     
     if request.method == 'POST':
-        form = LessonForm(request.POST)
+        form = LessonForm(request.POST, request.FILES)
         if form.is_valid():
             lesson = form.save(commit=False)
             lesson.course = course
@@ -113,3 +126,21 @@ def category_courses(request, category_id):
     category = get_object_or_404(Category, id=category_id)
     courses = Course.objects.filter(category=category)
     return render(request, 'courses/category_courses.html', {'category': category, 'courses': courses})
+
+@login_required
+def edit_lesson(request, course_id ,lesson_id):
+    course = get_object_or_404(Course, id=course_id)
+    lesson = get_object_or_404(Lesson, id=lesson_id)
+    if not request.user.is_admin_user() and (not request.user.is_tutor() or course.tutor != request.user):
+        messages.error(request, "You don't have permission to edit this lesson.")
+        return redirect('course_detail', course_id=course.id)
+    
+    if request.method == 'POST':
+        form = LessonForm(request.POST, request.FILES, instance=lesson)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Lesson updated successfully.")
+            return redirect('course_detail', course_id=course.id)
+    else:
+        form = LessonForm(instance=lesson)
+    return render(request, 'courses/edit_lesson.html', {'form': form, 'course': course, 'lesson': lesson})
