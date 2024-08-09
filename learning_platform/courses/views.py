@@ -21,11 +21,11 @@ def home(request):
             return redirect('course_list')
         else:
             messages.error(request, "Invalid username or password.")
-
-    featured_courses = Course.objects.filter(featured=True)[:6]
+    
+    #featured_courses = Course.objects.filter(featured=True)[:6]  #olmayan tablodan veri çekmeye çalışıyor
     categories = Category.objects.all()[:6]
     return render(request, 'home.html', {
-        'featured_courses': featured_courses,
+        #'featured_courses': featured_courses, 
         'categories': categories,
     })
 
@@ -52,7 +52,7 @@ def course_list(request):
         # Fuzzy search
         course_titles = courses.values_list('title', flat=True)
         matches = process.extract(search_term, course_titles, limit=10, scorer=fuzz.partial_ratio)
-        matched_titles = [match[0] for match in matches if match[1] >= 40]  # 40% similarity threshold
+        matched_titles = [match[0] for match in matches if match[1] >= 45]  # 40% similarity threshold
         
         courses = courses.filter(Q(title__in=matched_titles) | Q(description__icontains=search_term))
 

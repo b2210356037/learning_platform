@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-kj51#pw6ps*r2@bje7z-+@smxex2mu%qfc6rh9c9o5%kd7-npr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.77.14']
 
 
 # Application definition
@@ -95,13 +95,14 @@ WSGI_APPLICATION = 'learning_platform.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'akademi',
+        'NAME': 'postgres-container',
         'USER': 'postgres',
         'PASSWORD': '12345',
         'HOST': 'db',
         'PORT': '5432',
     }
 }
+
 
 
 
