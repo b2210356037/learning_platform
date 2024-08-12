@@ -28,7 +28,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['192.168.77.14', 'localhost']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -82,14 +81,27 @@ WSGI_APPLICATION = 'learning_platform.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 ##default djanga database
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+
+##postgres database
+
+
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'postgres-container',
+#         'USER': 'postgres',
+#         'PASSWORD': '12345',
+#         'HOST': '192.168.77.14',
+#         'PORT': '5432',
 #     }
 # }
 
-##postgres database
 
 
 DATABASES = {
