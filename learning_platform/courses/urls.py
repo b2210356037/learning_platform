@@ -6,7 +6,10 @@ urlpatterns = [
     path('<int:course_id>/', views.course_detail, name='course_detail'),
     path('create/', views.create_course, name='create_course'),
     path('<int:course_id>/delete/', views.delete_course, name='delete_course'),
+<<<<<<< HEAD
     path('course/<int:course_id>/lesson/<int:lesson_id>/delete/', views.delete_lesson, name='delete_lesson'),
+=======
+>>>>>>> b0c7de0 (deleteing course implemented)
 
     path('<int:course_id>/edit/', views.edit_course, name='edit_course'),
     path('<int:course_id>/add_lesson/', views.create_lesson, name='create_lesson'),
