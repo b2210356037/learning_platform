@@ -21,8 +21,6 @@ def home(request):
             return redirect('course_list')
         else:
             messages.error(request, "Invalid username or password.")
-
-    
     #featured_courses = Course.objects.filter(featured=True)[:6]  #olmayan tablodan veri çekmeye çalışıyor
     categories = Category.objects.all()[:6]
     return render(request, 'home.html', {
