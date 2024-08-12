@@ -2,9 +2,9 @@
 
 {% block content %}
     <div class="container">
-        <h1 class="mb-4">{{ course.title }}</h1>
+        <h1 class="mb-4 text-primary">{{ course.title }}</h1>
         <p class="lead">{{ course.description }}</p>
-        <p><strong>Tutor:</strong> {{ course.tutor.username }}</p>
+        <p><strong>Tutor:</strong> <span class="badge bg-info">{{ course.tutor.username }}</span></p>
 
         {% if user.is_authenticated %}
             <form action="{% url 'toggle_favorite' course.id %}" method="post" class="mb-3">
@@ -17,27 +17,29 @@
             </form>
         {% endif %}
 
-        <h2 class="mt-5 mb-4">Lessons</h2>
+        <h2 class="mt-5 mb-4 text-secondary">Lessons</h2>
         <div class="list-group">
             {% for lesson in lessons %}
             <li class="list-group-item">
-                <h4>{{ lesson.title }}</h4>
+                <h4 class="text-dark">{{ lesson.title }}</h4>
                 <p>{{ lesson.content }}</p>
                 {% if lesson.video %}
-                    <!-- Video player code -->
+                    <div class="plyr__video-embed">
+                        <!-- Video player code -->
+                    </div>
                 {% else %}
-                    <p>No video available for this lesson.</p>
+                    <p class="text-muted">No video available for this lesson.</p>
                 {% endif %}
                 {% if user.is_tutor and course.tutor == user or user.is_admin_user %}
-                    <a href="{% url 'edit_lesson' course.id lesson.id %}" class="btn btn-secondary btn-sm mt-2">Edit Lesson</a>
-                    <a href="{% url 'delete_lesson' course.id lesson.id %}" class="btn btn-danger btn-sm mt-2">Delete Lesson</a>
+                    <a href="{% url 'edit_lesson' course.id lesson.id %}" class="btn btn-outline-secondary btn-sm mt-2">Edit Lesson</a>
+                    <a href="{% url 'delete_lesson' course.id lesson.id %}" class="btn btn-outline-danger btn-sm mt-2">Delete Lesson</a>
                 {% endif %}
             </li>
-        {% empty %}
-            <li class="list-group-item">No lessons available.</li>
-        {% endfor %}
-        
-
+            {% empty %}
+            <li class="list-group-item text-center">
+                <p class="text-muted">No lessons available.</p>
+            </li>
+            {% endfor %}
         </div>
 
         {% if user.is_tutor and course.tutor == user or user.is_admin_user %}
@@ -48,8 +50,8 @@
         {% endif %}
         
         {% if user.is_admin_user or user == course.tutor %}
-     <a href="{% url 'delete_course' course.id %}" class="btn btn-danger mt-4">Delete Course</a>
-{% endif %}
+            <a href="{% url 'delete_course' course.id %}" class="btn btn-danger mt-4">Delete Course</a>
+        {% endif %}
 
         <a href="{% url 'course_list' %}" class="btn btn-link mt-4">Back to Course List</a>
     </div>
@@ -65,5 +67,3 @@
         });
     </script>
 {% endblock %}
-
-
