@@ -1,2 +1,4 @@
 media
 docker-compose.yml
+myproject_env
+*.pyc
