@@ -131,3 +131,54 @@ body {
     color: #ffffff; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
+
+/* Genel Stil Ayarları */
+body {
+    padding-top: 5rem;
+    margin-bottom: 4rem; 
+}
+
+.paper {
+    background-color: #ffffff; /* Beyaz arka plan rengi */
+    border-radius: 0.5rem; /* Köşe yuvarlaklığı */
+    padding: 1.5rem; /* İç boşluk */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+}
+
+/* Form Etiketleri ve Alanlar için Stil */
+.form-group {
+    margin-bottom: 1.5rem; /* Alanlar arasında boşluk */
+}
+
+.form-label {
+    font-weight: bold; /* Etiketlerin kalın font ile görünmesini sağlar */
+    margin-bottom: 0.5rem; /* Etiket ve input arasında boşluk */
+    display: block; /* Etiketi blok olarak gösterir */
+    text-align: center; /* Etiketleri ortalar */
+}
+
+.form-control {
+    display: block; /* Input kutusunu blok olarak gösterir */
+    width: 100%; /* Genişliği %100 yaparak tam genişlik sağlar */
+    border-radius: 0.25rem; /* Input köşelerini yuvarlar */
+    box-shadow: none; /* Input kutularının gölgesini kaldırır */
+}
+
+/* Textarea için Stil */
+textarea.form-control {
+    height: 150px; /* Yüksekliği ayarlar */
+    resize: vertical; /* Sadece dikey olarak yeniden boyutlandırılabilir */
+}
+
+/* Button için Stil */
+.btn-primary {
+    background-color: #007bff; /* Mavi arka plan rengi */
+    border: none; /* Kenar çizgilerini kaldırır */
+    box-shadow: none; /* Kendi gölgesini kaldırır */
+}
+
+.btn-secondary {
+    background-color: #6c757d; /* Gri arka plan rengi */
+    border: none; /* Kenar çizgilerini kaldırır */
+    box-shadow: none; /* Kendi gölgesini kaldırır */
+}
