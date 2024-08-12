@@ -50,6 +50,10 @@
                 <a href="{% url 'edit_course' course.id %}" class="btn btn-secondary">Edit Course</a>
             </div>
         {% endif %}
+        
+        {% if user.is_admin_user or user == course.tutor %}
+     <a href="{% url 'delete_course' course.id %}" class="btn btn-danger mt-4">Delete Course</a>
+{% endif %}
 
         <a href="{% url 'course_list' %}" class="btn btn-link mt-4">Back to Course List</a>
     </div>
@@ -65,3 +69,5 @@
         });
     </script>
 {% endblock %}
+
+

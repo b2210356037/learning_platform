@@ -87,6 +87,22 @@ def create_course(request):
     return render(request, 'courses/course_form.html', {'form': form})
 
 @login_required
+def delete_course(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+    if not request.user.is_admin_user() and (not request.user.is_tutor() or course.tutor != request.user):
+        messages.error(request, "You don't have permission to delete this course.")
+        return redirect('course_list')
+    
+    if request.method == 'POST':
+        # Delete associated lessons
+        course.lessons.all().delete()
+        course.delete()
+        messages.success(request, "Course and associated lessons deleted successfully.")
+        return redirect('course_list')
+    
+    return render(request, 'courses/delete_course_confirm.html', {'course': course})
+
+@login_required
 def edit_course(request, course_id):
     course = get_object_or_404(Course, id=course_id)
     if not request.user.is_admin_user() and (not request.user.is_tutor() or course.tutor != request.user):
@@ -121,6 +137,21 @@ def create_lesson(request, course_id):
     else:
         form = LessonForm()
     return render(request, 'courses/lesson_form.html', {'form': form, 'course': course})
+
+@login_required
+def delete_lesson(request, course_id, lesson_id):
+    course = get_object_or_404(Course, id=course_id)
+    lesson = get_object_or_404(Lesson, id=lesson_id, course=course)
+    if not request.user.is_admin_user() and (not request.user.is_tutor() or course.tutor != request.user):
+        messages.error(request, "You don't have permission to delete this lesson.")
+        return redirect('course_detail', course_id=course.id)
+    
+    if request.method == 'POST':
+        lesson.delete()
+        messages.success(request, "Lesson deleted successfully.")
+        return redirect('course_detail', course_id=course.id)
+    
+    return render(request, 'courses/delete_lesson_confirm.html', {'course': course, 'lesson': lesson})
 
 def category_courses(request, category_id):
     category = get_object_or_404(Category, id=category_id)
