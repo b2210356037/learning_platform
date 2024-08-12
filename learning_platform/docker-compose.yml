@@ -1,28 +1,34 @@
 version: '3.8'
-
 services:
-  db:
-    image: postgres:13
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=Learning_Platform
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=12345
-    ports:
-      - "5432:5432"
-
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/code
+      - .:/app
     ports:
       - "8000:8000"
     depends_on:
       - db
     environment:
-      - DATABASE_URL=postgres://postgres:12345@db:5432/Learning_Platform
+      - DB_NAME=postgres-container
+      - DB_USER=postgres
+      - DB_PASSWORD=12345
+      - DB_HOST=db
+      - DB_PORT=5432
+    networks:
+      - djangonetwork
 
-volumes:
-  postgres_data:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres-container
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=12345
+      - DJANGO_ALLOWED_HOSTS=192.168.77.14
+    container_name: db
+    networks:
+      - djangonetwork
+
+networks:
+  djangonetwork:
+    driver: bridge
