@@ -1,10 +1,32 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>{% if lesson %}Edit{% else %}Create{% endif %} Lesson</h2>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-  </form>
+<div class="container">
+    <h2 class="text-center mb-4">{% if lesson %}Edit{% else %}Create{% endif %} Lesson</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="mb-3 text-center">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        <div class="d-flex justify-content-center">
+                            {{ field }}
+                        </div>
+                        {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <p class="text-danger">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a href="{% url 'course_detail' course.id %}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

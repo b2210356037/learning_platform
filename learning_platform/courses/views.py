@@ -121,7 +121,7 @@ def edit_course(request, course_id):
 @login_required
 def create_lesson(request, course_id):
     course = get_object_or_404(Course, id=course_id)
-    if not request.user.is_admin_user() and (not request.user.is_tutor() or course.tutor != request.user):
+    if not (request.user.is_admin_user or (request.user.is_tutor and course.tutor == request.user)):
         messages.error(request, "You don't have permission to add lessons to this course.")
         return redirect('course_detail', course_id=course.id)
     

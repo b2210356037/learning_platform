@@ -1,69 +1,65 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container">
-        <h1 class="mb-4">{{ course.title }}</h1>
-        <p class="lead">{{ course.description }}</p>
-        <p><strong>Tutor:</strong> {{ course.tutor.username }}</p>
+<div class="container">
+    <h1 class="mb-4">{{ course.title }}</h1>
+    <p class="lead">{{ course.description }}</p>
+    <p><strong>Tutor:</strong> {{ course.tutor.username }}</p>
 
-        {% if user.is_authenticated %}
-            <form action="{% url 'toggle_favorite' course.id %}" method="post" class="mb-3">
-                {% csrf_token %}
-                {% if user in course.favorites.all %}
-                    <button type="submit" class="btn btn-warning">Remove from Favorites</button>
-                {% else %}
-                    <button type="submit" class="btn btn-success">Add to Favorites</button>
-                {% endif %}
-            </form>
-        {% endif %}
+    {% if user.is_authenticated %}
+        <form action="{% url 'toggle_favorite' course.id %}" method="post" class="mb-3">
+            {% csrf_token %}
+            {% if user in course.favorites.all %}
+                <button type="submit" class="btn btn-warning">Remove from Favorites</button>
+            {% else %}
+                <button type="submit" class="btn btn-success">Add to Favorites</button>
+            {% endif %}
+        </form>
+    {% endif %}
 
-        <h2 class="mt-5 mb-4">Lessons</h2>
-        <div class="list-group">
-            {% for lesson in lessons %}
-            <li class="list-group-item">
-                <h4>{{ lesson.title }}</h4>
-                <p>{{ lesson.content }}</p>
-                {% if lesson.video %}
-                    <!-- Video player code -->
-                {% else %}
-                    <p>No video available for this lesson.</p>
-                {% endif %}
-                {% if user.is_tutor and course.tutor == user or user.is_admin_user %}
-                    <a href="{% url 'edit_lesson' course.id lesson.id %}" class="btn btn-secondary btn-sm mt-2">Edit Lesson</a>
-                    <a href="{% url 'delete_lesson' course.id lesson.id %}" class="btn btn-danger btn-sm mt-2">Delete Lesson</a>
-                {% endif %}
-            </li>
+    <h2 class="mt-5 mb-4">Lessons</h2>
+    <div class="list-group">
+        {% for lesson in course.lessons.all %}
+        <li class="list-group-item">
+            <h4>{{ lesson.title }}</h4>
+            <p>{{ lesson.content }}</p>
+            {% if lesson.video %}
+                <video src="{{ lesson.video.url }}" class="plyr__video-embed" controls></video>
+            {% else %}
+                <p>No video available for this lesson.</p>
+            {% endif %}
+            {% if user.is_tutor and course.tutor == user or user.is_admin_user %}
+                <a href="{% url 'edit_lesson' course.id lesson.id %}" class="btn btn-secondary btn-sm mt-2">Edit Lesson</a>
+                <a href="{% url 'delete_lesson' course.id lesson.id %}" class="btn btn-danger btn-sm mt-2">Delete Lesson</a>
+            {% endif %}
+        </li>
         {% empty %}
             <li class="list-group-item">No lessons available.</li>
         {% endfor %}
-        
-
-        </div>
-
-        {% if user.is_tutor and course.tutor == user or user.is_admin_user %}
-            <div class="mt-4">
-                <a href="{% url 'create_lesson' course.id %}" class="btn btn-primary">Add Lesson</a>
-                <a href="{% url 'edit_course' course.id %}" class="btn btn-secondary">Edit Course</a>
-            </div>
-        {% endif %}
-        
-        {% if user.is_admin_user or user == course.tutor %}
-     <a href="{% url 'delete_course' course.id %}" class="btn btn-danger mt-4">Delete Course</a>
-{% endif %}
-
-        <a href="{% url 'course_list' %}" class="btn btn-link mt-4">Back to Course List</a>
     </div>
+
+    {% if user.is_tutor and course.tutor == user or user.is_admin_user %}
+        <div class="mt-4">
+            <a href="{% url 'create_lesson' course.id %}" class="btn btn-primary">Add Lesson</a>
+            <a href="{% url 'edit_course' course.id %}" class="btn btn-secondary">Edit Course</a>
+        </div>
+    {% endif %}
+    
+    {% if user.is_admin_user or user == course.tutor %}
+        <a href="{% url 'delete_course' course.id %}" class="btn btn-danger mt-4">Delete Course</a>
+    {% endif %}
+
+    <a href="{% url 'course_list' %}" class="btn btn-link mt-4">Back to Course List</a>
+</div>
 {% endblock %}
 
 {% block extra_js %}
     {{ block.super }}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const players = Plyr.setup('.plyr__video-embed video', {
+            const players = Plyr.setup('.plyr__video-embed', {
                 controls: ['play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen', 'settings'],
             });
         });
     </script>
 {% endblock %}
-
-
