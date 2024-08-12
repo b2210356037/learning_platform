@@ -2,18 +2,25 @@
 
 {% block content %}
 <div class="container my-5">
-    <section class="paper border shadow shadow-large">
+    <section class="paper border shadow shadow-large p-4">
         <h2 class="text-center mb-4 text-primary">
             {% if course %}Edit Course{% else %}Create New Course{% endif %}
         </h2>
 
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="paper border shadow shadow-large">
+                <div class="paper border shadow shadow-large p-4">
                     <div class="card-body">
                         <form method="post">
                             {% csrf_token %}
-                            {{ form.as_p }}
+                            <div class="form-group mb-4">
+                                <label for="id_title" class="form-label">Title</label>
+                                <input type="text" name="title" maxlength="200" required id="id_title" class="form-control">
+                            </div>
+                            <div class="form-group mb-4">
+                                <label for="id_description" class="form-label">Description</label>
+                                <textarea name="description" maxlength="500" required id="id_description" class="form-control"></textarea>
+                            </div>
                             <div class="text-center mt-4">
                                 <button type="submit" class="btn btn-primary btn-lg">Save</button>
                             </div>
