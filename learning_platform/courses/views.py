@@ -62,7 +62,7 @@ def course_list(request):
 def course_detail(request, course_id):
     course = get_object_or_404(Course, id=course_id)
     lessons = course.lessons.all()
-    if request.user.is_student() or request.user.is_admin_user() or (request.user.is_tutor() and course.tutor == request.user):
+    if request.user.is_student() or request.user.is_admin_user() or (request.user.is_tutor()):
         return render(request, 'courses/course_detail.html', {'course': course, 'lessons': lessons})
     else:
         messages.error(request, "You don't have permission to view this course.")
@@ -142,16 +142,17 @@ def create_lesson(request, course_id):
 def delete_lesson(request, course_id, lesson_id):
     course = get_object_or_404(Course, id=course_id)
     lesson = get_object_or_404(Lesson, id=lesson_id, course=course)
-    if not request.user.is_admin_user() and (not request.user.is_tutor() or course.tutor != request.user):
-        messages.error(request, "You don't have permission to delete this lesson.")
+
+    if request.user.is_admin_user or (request.user.is_tutor and course.tutor == request.user):
+        if request.method == 'POST':
+            lesson.delete()
+            messages.success(request, f'Lesson "{lesson.title}" has been deleted.')
+            return redirect('course_detail', course_id=course.id)
+        else:
+            return render(request, 'courses/delete_lesson_confirm.html', {'course': course, 'lesson': lesson})
+    else:
+        messages.error(request, 'You do not have permission to delete this lesson.')
         return redirect('course_detail', course_id=course.id)
-    
-    if request.method == 'POST':
-        lesson.delete()
-        messages.success(request, "Lesson deleted successfully.")
-        return redirect('course_detail', course_id=course.id)
-    
-    return render(request, 'courses/delete_lesson_confirm.html', {'course': course, 'lesson': lesson})
 
 def category_courses(request, category_id):
     category = get_object_or_404(Category, id=category_id)

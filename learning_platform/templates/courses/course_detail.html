@@ -20,27 +20,23 @@
         <h2 class="mt-5 mb-4">Lessons</h2>
         <div class="list-group">
             {% for lesson in lessons %}
-    <li class="list-group-item">
-        <h4>{{ lesson.title }}</h4>
-        <p>{{ lesson.content }}</p>
-        {% if lesson.video %}
-            <div class="mt-3">
-                <div class="plyr__video-embed" id="player-{{ lesson.id }}" style="max-width: 480px; margin: 0 auto;">
-                    <video>
-                        <source src="{{ lesson.video.url }}" type="video/mp4" />
-                    </video>
-                </div>
-            </div>
-        {% else %}
-            <p>No video available for this lesson.</p>
-        {% endif %}
-        {% if user.is_tutor and course.tutor == user or user.is_admin_user %}
-            <a href="{% url 'edit_lesson' course.id lesson.id %}" class="btn btn-secondary btn-sm mt-2">Edit Lesson</a>
-        {% endif %}
-    </li>
-{% empty %}
-    <li class="list-group-item">No lessons available.</li>
-{% endfor %}
+            <li class="list-group-item">
+                <h4>{{ lesson.title }}</h4>
+                <p>{{ lesson.content }}</p>
+                {% if lesson.video %}
+                    <!-- Video player code -->
+                {% else %}
+                    <p>No video available for this lesson.</p>
+                {% endif %}
+                {% if user.is_tutor and course.tutor == user or user.is_admin_user %}
+                    <a href="{% url 'edit_lesson' course.id lesson.id %}" class="btn btn-secondary btn-sm mt-2">Edit Lesson</a>
+                    <a href="{% url 'delete_lesson' course.id lesson.id %}" class="btn btn-danger btn-sm mt-2">Delete Lesson</a>
+                {% endif %}
+            </li>
+        {% empty %}
+            <li class="list-group-item">No lessons available.</li>
+        {% endfor %}
+        
 
         </div>
 
