@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <h2 class="text-center mb-4">Edit Lesson</h2>
+<div class="container my-5">
+    <h2 class="text-center mb-4 text-primary">Edit Lesson</h2>
     <div class="row justify-content-center">
         <div class="col-md-8">
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="mb-3">
-                    <label for="id_title" class="form-label text-center d-block">Title</label>
+                    <label for="id_title" class="form-label">Title</label>
                     <input type="text" name="title" maxlength="200" class="form-control text-center" id="id_title" required>
                 </div>
                 <div class="mb-3">
-                    <label for="id_content" class="form-label text-center d-block">Content</label>
+                    <label for="id_content" class="form-label">Content</label>
                     <textarea name="content" class="form-control text-center" id="id_content" rows="5" required></textarea>
                 </div>
                 <div class="mb-3">
-                    <label for="id_video" class="form-label text-center d-block">Video</label>
+                    <label for="id_video" class="form-label">Video</label>
                     <input type="file" name="video" class="form-control text-center" id="id_video">
                 </div>
                 <div class="text-center mt-4">
