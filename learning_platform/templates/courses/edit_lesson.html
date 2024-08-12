@@ -2,12 +2,29 @@
 
 {% block content %}
 <div class="container">
-    <h2>Edit Lesson: {{ lesson.title }}</h2>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-        <a href="{% url 'course_detail' course.id %}" class="btn btn-secondary">Cancel</a>
-    </form>
+    <h2 class="text-center mb-4">Edit Lesson</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="id_title" class="form-label text-center d-block">Title</label>
+                    <input type="text" name="title" maxlength="200" class="form-control text-center" id="id_title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="id_content" class="form-label text-center d-block">Content</label>
+                    <textarea name="content" class="form-control text-center" id="id_content" rows="5" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="id_video" class="form-label text-center d-block">Video</label>
+                    <input type="file" name="video" class="form-control text-center" id="id_video">
+                </div>
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a href="{% url 'course_detail' course.id %}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}
